@@ -71,6 +71,7 @@ export default function App() {
   const { scrollY, scrollYProgress } = useScroll();
   const headerOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0.9]);
   const scrollProgressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const heroImageY = useTransform(scrollY, [0, 500], [0, 100]);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
@@ -164,24 +165,25 @@ export default function App() {
       <div className="h-16" />
 
       {/* Hero Section */}
-      <section className="px-6 py-12 lg:py-24 max-w-7xl mx-auto lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center">
+      <section className="px-6 py-12 sm:py-20 max-w-4xl mx-auto">
         <motion.div 
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.21, 0.45, 0.15, 1.0] }}
-          className="relative rounded-[3rem] overflow-hidden shadow-premium mb-12 lg:mb-0 aspect-square sm:aspect-[4/5] lg:aspect-[4/5] bg-white group lg:order-2"
+          className="relative rounded-[3rem] overflow-hidden shadow-premium mb-12 aspect-[16/10] sm:aspect-[21/9] bg-gray-50 group"
         >
-          {/* Foto da Hero - Ajustada para visualização completa e sem cortes */}
-          <img 
+          {/* Nova Foto da Hero com Parallax Suave */}
+          <motion.img 
+            style={{ y: heroImageY }}
             src="https://i.imgur.com/jQqESwf.png" 
             alt="Dra. Eduarda Menegat - Autence Odontologia" 
-            className="w-full h-full object-contain object-center"
+            className="w-full h-full object-contain sm:object-cover object-center scale-110"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-linear-to-t from-brand-dark/20 via-transparent to-transparent lg:hidden pointer-events-none" />
+          <div className="absolute inset-0 bg-linear-to-t from-brand-dark/60 via-transparent to-transparent" />
         </motion.div>
 
-        <div className="text-center lg:text-left space-y-8 lg:order-1">
+        <div className="text-center space-y-8">
           <FadeInWhenVisible delay={0.2} y={20}>
             <h2 className="text-4xl sm:text-7xl font-serif font-bold leading-[1.05] text-brand-dark tracking-tight">
               A arte de cuidar do seu <span className="text-gradient-gold italic">melhor sorriso</span>
@@ -189,7 +191,7 @@ export default function App() {
           </FadeInWhenVisible>
           
           <FadeInWhenVisible delay={0.4} y={20}>
-            <p className="text-gray-500 text-lg sm:text-2xl max-w-2xl lg:max-w-none mx-auto lg:mx-0 leading-relaxed font-light tracking-tight">
+            <p className="text-gray-500 text-lg sm:text-2xl max-w-2xl mx-auto leading-relaxed font-light tracking-tight">
               Tecnologia avançada e um olhar humanizado para transformar sua experiência odontológica em algo único e relaxante.
             </p>
           </FadeInWhenVisible>
